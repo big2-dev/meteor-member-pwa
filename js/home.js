@@ -7,7 +7,7 @@ if (!memberId || !token) {
     window.location.href = "index.html";
 }
 
-document.getElementById("memberIdText").textContent = "会員ID：" + memberId;
+
 
 fetch(API_URL, {
     method: "POST",
@@ -19,8 +19,17 @@ fetch(API_URL, {
 .then(response => response.json())
 .then(result => {
     if (result.success) {
-        document.getElementById("memberIdText").textContent =
+        document.getElementById("memberName").textContent =
             result.name + " 様";
+
+        document.getElementById("memberType").textContent =
+            result.memberType || "-";
+
+        document.getElementById("expireDate").textContent =
+            result.expireDate || "-";
+
+        document.getElementById("points").textContent =
+         (result.points || 0) + " pt";
 
         console.log(result);
     } else {
