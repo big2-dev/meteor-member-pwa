@@ -28,9 +28,16 @@
       <small>様</small>
     </h1>
 
-    <div class="member-badge">
-      <span class="material-symbols-rounded">workspace_premium</span>
-      <span id="memberType">---</span>
+    <div class="member-status-row">
+      <div class="member-badge">
+        <span class="material-symbols-rounded">workspace_premium</span>
+        <span id="memberType">---</span>
+      </div>
+
+      <div class="expire-inline">
+        <span>有効期限</span>
+        <strong id="expireDate">----</strong>
+      </div>
     </div>
   </section>
 
@@ -48,17 +55,6 @@
       ポイント履歴を見る
       <span class="material-symbols-rounded">chevron_right</span>
     </div>
-  </section>
-
-  <section class="expire-card">
-    <span class="material-symbols-rounded expire-main-icon">calendar_month</span>
-
-    <div>
-      <p>有効期限</p>
-      <strong id="expireDate">----</strong>
-    </div>
-
-    <span class="material-symbols-rounded expire-check">verified</span>
   </section>
 
   <section class="notice-card" onclick="goNews()">

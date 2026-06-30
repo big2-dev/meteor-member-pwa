@@ -117,12 +117,19 @@ button{
   margin-left:6px;
 }
 
-.member-badge{
+.member-status-row{
   margin-top:14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:nowrap;
+}
+
+.member-badge{
   display:inline-flex;
   align-items:center;
   gap:7px;
-  width:max-content;
+  flex:0 0 auto;
   background:linear-gradient(180deg,#ffc947,#f2a40a);
   color:#fff;
   padding:8px 17px;
@@ -136,10 +143,38 @@ button{
   font-size:22px;
 }
 
+.expire-inline{
+  min-width:0;
+  flex:1;
+  height:45px;
+  padding:0 15px;
+  border-radius:999px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(16,62,120,.09);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  white-space:nowrap;
+}
+
+.expire-inline span{
+  color:#26374b;
+  font-size:14px;
+  font-weight:800;
+}
+
+.expire-inline strong{
+  color:#111827;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
 .point-card{
-  margin-top:10px;
+  margin-top:14px;
   border-radius:18px;
-  padding:26px 28px 23px;
+  padding:28px 28px 25px;
   color:#fff;
   background:
     radial-gradient(circle at 86% 38%, rgba(255,255,255,.17) 0 44px, transparent 45px),
@@ -152,7 +187,7 @@ button{
 .point-card::after{
   content:"";
   position:absolute;
-  right:29px;
+  right:30px;
   top:56px;
   width:116px;
   height:116px;
@@ -228,48 +263,16 @@ button{
   font-size:20px;
 }
 
-.expire-card,
 .notice-card{
   margin-top:16px;
-  background:#fff;
+  background:#eff8ff;
   border-radius:18px;
-  padding:18px 20px;
+  padding:20px;
   box-shadow:var(--shadow);
   display:grid;
-  align-items:center;
-}
-
-.expire-card{
-  grid-template-columns:52px 1fr 54px;
-  gap:14px;
-}
-
-.expire-main-icon{
-  font-size:38px;
-  color:var(--deep);
-}
-
-.expire-card p{
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:4px;
-}
-
-.expire-card strong{
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:.02em;
-}
-
-.expire-check{
-  color:#a8cff8;
-  font-size:44px;
-}
-
-.notice-card{
   grid-template-columns:52px 1fr 26px;
   gap:14px;
-  background:#eff8ff;
+  align-items:center;
 }
 
 .notice-main-icon{
@@ -420,68 +423,14 @@ button{
 @media(max-width:380px){
   .app{padding:16px 16px 0;}
   .logo{width:245px;}
-  .member-block{min-height:125px;}
+  .member-block{min-height:128px;}
   .member-block h1{font-size:31px;}
+  .member-status-row{gap:8px;}
+  .member-badge{font-size:15px;padding:8px 13px;}
+  .expire-inline{height:42px;padding:0 12px;gap:7px;}
+  .expire-inline span{font-size:12px;}
+  .expire-inline strong{font-size:14px;}
   .point-main span{font-size:52px;}
   .quick-grid{gap:8px;}
   .quick-grid button{min-height:112px;}
-}
-
-/* =========================
-   LOGIN PAGE
-========================= */
-
-.login-box{
-  width:90%;
-  max-width:380px;
-  margin:40px auto;
-  background:#fff;
-  border-radius:20px;
-  padding:35px;
-  box-shadow:0 10px 30px rgba(0,0,0,.15);
-  text-align:center;
-}
-
-.login-box .logo{
-  width:220px;
-  max-width:90%;
-  display:block;
-  margin:0 auto 22px;
-}
-
-.login-box .copy,
-.login-box .tagline{
-  font-size:14px;
-  color:#666;
-  margin:0 0 28px;
-  line-height:1.7;
-  font-weight:500;
-}
-
-.login-box input{
-  width:100%;
-  height:54px;
-  padding:0 16px;
-  margin-bottom:14px;
-  border:1px solid #d6d6d6;
-  border-radius:12px;
-  font-size:16px;
-}
-
-.login-box button{
-  width:100%;
-  height:56px;
-  margin-top:4px;
-  border:none;
-  border-radius:12px;
-  background:#0b5bb5;
-  color:#fff;
-  font-size:18px;
-  font-weight:700;
-}
-
-.version{
-  margin-top:28px;
-  color:#999;
-  font-size:13px;
 }
