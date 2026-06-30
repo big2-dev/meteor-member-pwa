@@ -33,30 +33,33 @@ function loadMemberInfo() {
       memberId: memberId
     })
   })
-  .then(response => response.json())
-  .then(result => {
-    if (!result.success) {
-      document.getElementById("memberName").textContent = "会員情報なし";
-      document.getElementById("todayNews").textContent = result.message || "会員情報が見つかりません。";
-      return;
-    }
+    .then(response => response.json())
+    .then(result => {
+      if (!result.success) {
+        document.getElementById("memberName").textContent = "会員情報なし";
+        document.getElementById("todayNews").textContent =
+          result.message || "会員情報が見つかりません。";
+        return;
+      }
 
-    document.getElementById("memberName").textContent = result.name || "会員";
-    document.getElementById("memberType").textContent = result.memberType || "-";
-    document.getElementById("expireDate").textContent = formatDate(result.expireDate);
-    document.getElementById("pointBalance").textContent = formatPoint(result.points);
+      document.getElementById("memberName").textContent = result.name || "会員";
+      document.getElementById("memberType").textContent = result.memberType || "-";
+      document.getElementById("expireDate").textContent = formatDate(result.expireDate);
+      document.getElementById("pointBalance").textContent = formatPoint(result.points);
 
-    setExpireColor(result.expireDate);
-  })
-  .catch(error => {
-    console.error(error);
-    document.getElementById("memberName").textContent = "通信エラー";
-    document.getElementById("todayNews").textContent = "会員情報の取得に失敗しました。";
-  });
+      setExpireColor(result.expireDate);
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("memberName").textContent = "通信エラー";
+      document.getElementById("todayNews").textContent =
+        "会員情報の取得に失敗しました。";
+    });
 }
 
 function formatDate(value) {
   if (!value) return "-";
+
   const date = new Date(value);
   if (isNaN(date.getTime())) return value;
 
@@ -75,8 +78,8 @@ function setExpireColor(value) {
   if (isNaN(expire.getTime())) return;
 
   const today = new Date();
-  today.setHours(0,0,0,0);
-  expire.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
+  expire.setHours(0, 0, 0, 0);
 
   const diffDays = Math.ceil((expire - today) / (1000 * 60 * 60 * 24));
 
@@ -94,15 +97,30 @@ function formatPoint(value) {
   return num.toLocaleString("ja-JP");
 }
 
-function goHome() { window.location.href = "home.html"; }
-function goQR() { window.location.href = "qr.html"; }
-function goPoint() { window.location.href = "point.html"; }
-function goEvent() { window.location.href = "event.html"; }
-function goNews() { window.location.href = "news.html"; }
-function goSettings() { window.location.href = "settings.html"; }
+function goHome() {
+  window.location.href = "home.html";
+}
+
+function goQR() {
+  window.location.href = "qr.html";
+}
+
+function goEvent() {
+  window.location.href = "event.html";
+}
+
+function goNews() {
+  window.location.href = "news.html";
+}
+
+function goSettings() {
+  window.location.href = "settings.html";
+}
 
 function logout() {
   localStorage.removeItem("meteor_token");
   localStorage.removeItem("meteor_member_id");
+  localStorage.removeItem("meteor_member_cache");
+  localStorage.removeItem("meteor_point_cache");
   window.location.href = "index.html";
 }

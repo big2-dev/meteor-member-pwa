@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
 </head>
+
 <body>
 <main class="app">
 
@@ -41,7 +42,7 @@
     </div>
   </section>
 
-  <section class="point-card" onclick="goPoint()">
+  <section class="point-card point-card-static">
     <div class="point-mark">P</div>
 
     <p class="point-title">現在ポイント</p>
@@ -49,11 +50,6 @@
     <div class="point-main">
       <span id="pointBalance">0</span>
       <small>pt</small>
-    </div>
-
-    <div class="point-button">
-      ポイント履歴を見る
-      <span class="material-symbols-rounded">chevron_right</span>
     </div>
   </section>
 
@@ -88,12 +84,6 @@
       <small>受付で提示</small>
     </button>
 
-    <button onclick="goPoint()">
-      <span class="material-symbols-rounded navy">credit_card</span>
-      <strong>ポイント履歴</strong>
-      <small>利用履歴を確認</small>
-    </button>
-
     <button onclick="goEvent()">
       <span class="material-symbols-rounded orange">calendar_month</span>
       <strong>イベント</strong>
@@ -105,15 +95,15 @@
       <strong>お知らせ</strong>
       <small>最新情報を確認</small>
     </button>
+
+    <button onclick="goSettings()">
+      <span class="material-symbols-rounded navy">settings</span>
+      <strong>設定</strong>
+      <small>各種設定</small>
+    </button>
   </section>
 
   <section class="wide-list">
-    <button onclick="goSettings()">
-      <span class="material-symbols-rounded">settings</span>
-      <strong>設定</strong>
-      <span class="material-symbols-rounded">chevron_right</span>
-    </button>
-
     <button class="logout" onclick="logout()">
       <span class="material-symbols-rounded">logout</span>
       <strong>ログアウト</strong>
@@ -133,14 +123,14 @@
       <small>会員証</small>
     </button>
 
-    <button onclick="goPoint()">
-      <span class="material-symbols-rounded">paid</span>
-      <small>ポイント</small>
-    </button>
-
     <button onclick="goEvent()">
       <span class="material-symbols-rounded">event</span>
       <small>イベント</small>
+    </button>
+
+    <button onclick="goNews()">
+      <span class="material-symbols-rounded">campaign</span>
+      <small>お知らせ</small>
     </button>
 
     <button onclick="goSettings()">
