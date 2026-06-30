@@ -4,67 +4,81 @@ const memberId = localStorage.getItem("meteor_member_id");
 const token = localStorage.getItem("meteor_token");
 
 if (!memberId || !token) {
-    window.location.href = "index.html";
+  window.location.href = "index.html";
 }
 
-
-
-fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-        action: "getMemberInfo",
-        memberId: memberId
-    })
-})
-.then(response => response.json())
-.then(result => {
-    if (result.success) {
-        document.getElementById("memberName").textContent =
-            result.name + " 様";
-
-        document.getElementById("memberType").textContent =
-            result.memberType || "-";
-
-        document.getElementById("expireDate").textContent =
-           formatDate(result.expireDate);
-
-        document.getElementById("points").textContent =
-         (result.points || 0) + " pt";
-
-        console.log(result);
-    } else {
-        document.getElementById("memberIdText").textContent =
-            result.message;
-    }
-})
-.catch(error => {
-    document.getElementById("memberIdText").textContent =
-        "会員情報の取得に失敗しました";
-
-    console.error(error);
+document.addEventListener("DOMContentLoaded", function () {
+  setGreeting();
+  loadMemberInfo();
 });
 
-function logout() {
-    localStorage.removeItem("meteor_token");
-    localStorage.removeItem("meteor_member_id");
+function setGreeting() {
+  const hour = new Date().getHours();
+  const greeting = document.getElementById("greeting");
 
-    window.location.href = "index.html";
+  if (hour < 11) {
+    greeting.textContent = "☀️ おはようございます！";
+  } else if (hour < 18) {
+    greeting.textContent = "こんにちは！";
+  } else {
+    greeting.textContent = "🌙 こんばんは！";
+  }
+}
+
+function loadMemberInfo() {
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "getMemberInfo",
+      memberId: memberId
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (!result.success) {
+      document.getElementById("memberName").textContent = "会員情報なし";
+      document.getElementById("todayNews").textContent = result.message || "会員情報が見つかりません。";
+      return;
+    }
+
+    document.getElementById("memberName").textContent = result.name || "会員";
+    document.getElementById("memberType").textContent = result.memberType || "-";
+    document.getElementById("expireDate").textContent = formatDate(result.expireDate);
+    document.getElementById("pointBalance").textContent = formatPoint(result.points);
+  })
+  .catch(error => {
+    console.error(error);
+    document.getElementById("memberName").textContent = "通信エラー";
+    document.getElementById("todayNews").textContent = "会員情報の取得に失敗しました。";
+  });
 }
 
 function formatDate(value) {
-    if (!value) {
-        return "-";
-    }
+  if (!value) return "-";
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return value;
 
-    const date = new Date(value);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-    if (isNaN(date.getTime())) {
-        return value;
-    }
+  return `${year}/${month}/${day}`;
+}
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+function formatPoint(value) {
+  const num = Number(value || 0);
+  return num.toLocaleString("ja-JP");
+}
 
-    return `${year}/${month}/${day}`;
+function goHome() { window.location.href = "home.html"; }
+function goQR() { window.location.href = "qr.html"; }
+function goPoint() { window.location.href = "point.html"; }
+function goEvent() { window.location.href = "event.html"; }
+function goNews() { window.location.href = "news.html"; }
+function goSettings() { window.location.href = "settings.html"; }
+
+function logout() {
+  localStorage.removeItem("meteor_token");
+  localStorage.removeItem("meteor_member_id");
+  window.location.href = "index.html";
 }

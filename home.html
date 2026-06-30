@@ -1,66 +1,147 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>METEO 会員ホーム</title>
-
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>METEO 会員ホーム</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
 </head>
-
 <body>
+<main class="app">
 
-<div class="login-box">
+  <header class="home-header">
+    <img src="images/logo-horizontal.png" alt="METEO" class="logo">
+    <p class="copy">あなたのゴルフライフを、もっと楽しく。</p>
 
-<img src="images/logo-horizontal.png" class="logo">
+    <button class="bell" onclick="goNews()" aria-label="お知らせ">
+      <span class="material-symbols-rounded">notifications</span>
+      <i></i>
+    </button>
+  </header>
 
-<h1>METEO 会員ページ</h1>
+  <section class="member-block">
+    <p id="greeting" class="greeting">こんにちは！</p>
 
-<div class="sub">
-ようこそ
-</div>
+    <h1>
+      <span id="memberName">読み込み中</span>
+      <small>様</small>
+    </h1>
 
-<div class="member-card">
-  <div id="memberName" class="member-name">読み込み中...</div>
+    <div class="member-badge">
+      <span class="material-symbols-rounded">workspace_premium</span>
+      <span id="memberType">---</span>
+    </div>
+  </section>
 
-  <div class="info-row">
-    <span>会員種別</span>
-    <strong id="memberType">-</strong>
-  </div>
+  <section class="point-card" onclick="goPoint()">
+    <div class="point-mark">P</div>
 
-  <div class="info-row">
-    <span>有効期限</span>
-    <strong id="expireDate">-</strong>
-  </div>
+    <p class="point-title">現在ポイント</p>
 
-  <div class="point-box">
-    <div>ポイント残高</div>
-    <strong id="points">- pt</strong>
-  </div>
-</div>
+    <div class="point-main">
+      <span id="pointBalance">0</span>
+      <small>pt</small>
+    </div>
 
-<br>
+    <div class="point-button">
+      ポイント履歴を見る
+      <span class="material-symbols-rounded">chevron_right</span>
+    </div>
+  </section>
 
-<button>
-ポイントを見る
-</button>
+  <section class="expire-card">
+    <span class="material-symbols-rounded expire-main-icon">calendar_month</span>
 
-<br><br>
+    <div>
+      <p>有効期限</p>
+      <strong id="expireDate">----</strong>
+    </div>
 
-<button>
-QR会員証
-</button>
+    <span class="material-symbols-rounded expire-check">verified</span>
+  </section>
 
-<br><br>
+  <section class="notice-card" onclick="goNews()">
+    <span class="material-symbols-rounded notice-main-icon">campaign</span>
 
-<button onclick="logout()">
-ログアウト
-</button>
+    <div>
+      <h2>本日のお知らせ</h2>
+      <p id="todayNews">本日は 22:00 まで営業しております。</p>
+    </div>
 
-</div>
+    <span class="material-symbols-rounded arrow">chevron_right</span>
+  </section>
+
+  <section class="quick-grid">
+    <button onclick="goQR()">
+      <span class="material-symbols-rounded blue">qr_code_2</span>
+      <strong>QR会員証</strong>
+      <small>受付で提示</small>
+    </button>
+
+    <button onclick="goPoint()">
+      <span class="material-symbols-rounded navy">credit_card</span>
+      <strong>ポイント履歴</strong>
+      <small>利用履歴を確認</small>
+    </button>
+
+    <button onclick="goEvent()">
+      <span class="material-symbols-rounded orange">calendar_month</span>
+      <strong>イベント</strong>
+      <small>開催予定を確認</small>
+    </button>
+
+    <button onclick="goNews()">
+      <span class="material-symbols-rounded purple">campaign</span>
+      <strong>お知らせ</strong>
+      <small>最新情報を確認</small>
+    </button>
+  </section>
+
+  <section class="wide-list">
+    <button onclick="goSettings()">
+      <span class="material-symbols-rounded">settings</span>
+      <strong>設定</strong>
+      <span class="material-symbols-rounded">chevron_right</span>
+    </button>
+
+    <button class="logout" onclick="logout()">
+      <span class="material-symbols-rounded">logout</span>
+      <strong>ログアウト</strong>
+    </button>
+  </section>
+
+  <div class="bottom-space"></div>
+
+  <nav class="bottom-nav">
+    <button class="active" onclick="goHome()">
+      <span class="material-symbols-rounded">home</span>
+      <small>ホーム</small>
+    </button>
+
+    <button onclick="goQR()">
+      <span class="material-symbols-rounded">qr_code_2</span>
+      <small>会員証</small>
+    </button>
+
+    <button onclick="goPoint()">
+      <span class="material-symbols-rounded">paid</span>
+      <small>ポイント</small>
+    </button>
+
+    <button onclick="goEvent()">
+      <span class="material-symbols-rounded">event</span>
+      <small>イベント</small>
+    </button>
+
+    <button onclick="goSettings()">
+      <span class="material-symbols-rounded">more_horiz</span>
+      <small>その他</small>
+    </button>
+  </nav>
+
+</main>
 
 <script src="js/home.js"></script>
-
 </body>
 </html>
