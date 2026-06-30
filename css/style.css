@@ -24,8 +24,10 @@ body{
 }
 
 .logo{
-    width:180px;
-    margin-bottom:20px;
+    width:320px;
+    max-width:90%;
+    display:block;
+    margin:0 auto 15px;
 }
 
 h1{
@@ -104,3 +106,13 @@ button:hover{
     font-size:34px;
     margin-top:8px;
 }
+
+.tagline{
+    font-size:16px;
+    color:#666;
+    text-align:center;
+    margin:15px 0 35px;
+    line-height:1.8;
+    font-weight:500;
+}
+
