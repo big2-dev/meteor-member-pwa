@@ -1,4 +1,5 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
+const MEMBER_API_URL = "https://script.google.com/macros/s/AKfycbxsHYfop671-Fb4GehXwx5XhfZguvlDZqvH2xCusPevwaggSRc3omhxittN7IQHPlC2/exec";
+const EVENT_API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
 const memberId = localStorage.getItem("meteor_member_id");
 const token = localStorage.getItem("meteor_token");
@@ -27,7 +28,7 @@ function setGreeting() {
 }
 
 function loadMemberInfo() {
-  fetch(API_URL, {
+  fetch(MEMBER_API_URL, {
     method: "POST",
     body: JSON.stringify({
       action: "getMemberInfo",
@@ -61,7 +62,7 @@ function loadHomeEvent() {
   const card = document.getElementById("homeEventCard");
   if (!card) return;
 
-  fetch(`${API_URL}?action=events`)
+  fetch(`${EVENT_API_URL}?action=events`)
     .then(response => response.json())
     .then(data => {
       if (!data.success || !data.events || data.events.length === 0) {
@@ -71,24 +72,17 @@ function loadHomeEvent() {
 
       const event = data.events[0];
 
-      document.getElementById("homeEventTitle").textContent =
-        event.title || "イベント";
-
-      document.getElementById("homeEventDate").textContent =
-        event.start || "日時はイベント詳細をご確認ください";
-
-      document.getElementById("homeEventPlace").textContent =
-        event.place || "メテオゴルフ";
-
-      document.getElementById("homeEventDetail").textContent =
-        event.description || "タップして詳細を見る";
+      document.getElementById("homeEventTitle").textContent = event.title || "イベント";
+      document.getElementById("homeEventDate").textContent = event.start || "日時はイベント詳細をご確認ください";
+      document.getElementById("homeEventPlace").textContent = event.place || "メテオゴルフ";
+      document.getElementById("homeEventDetail").textContent = event.description || "タップして詳細を見る";
 
       const image = document.getElementById("homeEventImage");
 
       if (event.image) {
         image.src = event.image;
       } else {
-        image.src = "";
+        image.removeAttribute("src");
         image.alt = "METEO イベント";
       }
 
