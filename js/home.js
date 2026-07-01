@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbxsHYfop671-Fb4GehXwx5XhfZguvlDZqvH2xCusPevwaggSRc3omhxittN7IQHPlC2/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
 const memberId = localStorage.getItem("meteor_member_id");
 const token = localStorage.getItem("meteor_token");
@@ -63,33 +63,33 @@ function loadHomeEvent() {
 
   fetch(`${API_URL}?action=events`)
     .then(response => response.json())
-    .then(result => {
-      if (!result.success || !result.events || result.events.length === 0) {
+    .then(data => {
+      if (!data.success || !data.events || data.events.length === 0) {
         card.style.display = "none";
         return;
       }
 
-      const event = result.events[0];
+      const event = data.events[0];
 
       document.getElementById("homeEventTitle").textContent =
-        event.title || event.eventName || "イベント";
+        event.title || "イベント";
 
       document.getElementById("homeEventDate").textContent =
-        formatEventDate(event.startDate || event.start || event.startAt);
+        event.start || "日時はイベント詳細をご確認ください";
 
       document.getElementById("homeEventPlace").textContent =
-        event.place || event.location || "場所：メテオゴルフ";
+        event.place || "メテオゴルフ";
 
       document.getElementById("homeEventDetail").textContent =
-        event.content || event.detail || event.memo || "タップして詳細を見る";
+        event.description || "タップして詳細を見る";
 
       const image = document.getElementById("homeEventImage");
-      const imageUrl = event.image || event.imageUrl || event.thumbnail || "";
 
-      if (imageUrl) {
-        image.src = imageUrl;
+      if (event.image) {
+        image.src = event.image;
       } else {
-        image.src = "images/event-placeholder.png";
+        image.src = "";
+        image.alt = "METEO イベント";
       }
 
       card.style.display = "block";
@@ -161,20 +161,6 @@ function formatDate(value) {
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}/${month}/${day}`;
-}
-
-function formatEventDate(value) {
-  if (!value) return "日時はイベント詳細をご確認ください";
-
-  const date = new Date(value);
-  if (isNaN(date.getTime())) return value;
-
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = String(date.getHours()).padStart(2, "0");
-  const minute = String(date.getMinutes()).padStart(2, "0");
-
-  return `${month}/${day} ${hour}:${minute}〜`;
 }
 
 function formatPoint(value) {
