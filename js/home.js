@@ -56,31 +56,49 @@ function loadMemberInfo() {
 }
 
 function loadHomeNews() {
-  const card = document.getElementById("homeNewsCard");
-  const title = document.getElementById("homeNewsTitle");
-  const body = document.getElementById("todayNews");
 
-  if (!card || !title || !body) return;
+  const card = document.getElementById("homeNewsCard");
+  const list = document.getElementById("homeNewsList");
+
+  if (!card || !list) return;
 
   fetch(`${CONTENT_API_URL}?action=news`)
     .then(response => response.json())
     .then(data => {
+
       if (!data.success || !data.news || data.news.length === 0) {
         card.style.display = "none";
         return;
       }
 
-      const news = data.news[0];
+      const newsList = data.news.slice(0, 2);
 
-      title.textContent = news.title || "本日のお知らせ";
-      body.textContent = news.body || "";
+      list.innerHTML = "";
+
+      newsList.forEach(news => {
+
+        const row = document.createElement("div");
+        row.className = "home-news-row";
+
+        row.innerHTML = `
+          <span class="home-news-title">${escapeHtml(news.title)}</span>
+          <span class="material-symbols-rounded">chevron_right</span>
+        `;
+
+        list.appendChild(row);
+
+      });
 
       card.style.display = "grid";
+
     })
     .catch(error => {
+
       console.error(error);
       card.style.display = "none";
+
     });
+
 }
 
 function loadHomeEvent() {

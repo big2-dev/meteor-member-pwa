@@ -44,7 +44,6 @@
 
   <section class="point-card point-card-static">
     <div class="point-mark">P</div>
-
     <p class="point-title">現在ポイント</p>
 
     <div class="point-main">
@@ -53,12 +52,12 @@
     </div>
   </section>
 
-  <section id="homeNewsCard" class="notice-card" onclick="goNews()" style="display:none;">
+  <section id="homeNewsCard" class="notice-card home-news-list-card" onclick="goNews()" style="display:none;">
     <span class="material-symbols-rounded notice-main-icon">campaign</span>
 
     <div>
-      <h2 id="homeNewsTitle">本日のお知らせ</h2>
-      <p id="todayNews">お知らせを読み込み中...</p>
+      <h2>お知らせ</h2>
+      <div id="homeNewsList" class="home-news-list"></div>
     </div>
 
     <span class="material-symbols-rounded arrow">chevron_right</span>
