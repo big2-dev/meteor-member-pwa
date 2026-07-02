@@ -74,9 +74,5 @@ function goPrivacy() {
 }
 
 function openWebsite() {
-  window.open(
-    "https://meteo-sportsplaza.com/golf",
-    "_blank",
-    "noopener"
-  );
+  window.location.href = "https://meteo-sportsplaza.com/golf";
 }

@@ -145,6 +145,15 @@ button{
   font-weight:700;
 }
 
+.menu-item div{
+  min-width:0;
+}
+
+.menu-item small{
+  white-space:normal;
+  line-height:1.4;
+}
+
 .menu-item .arrow{
   color:#8ea0b5;
   font-size:26px;
