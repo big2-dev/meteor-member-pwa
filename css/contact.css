@@ -45,18 +45,19 @@ button{
 }
 
 .back-btn{
-  position:absolute;
-  left:0;
-  top:4px;
+  position:fixed;
+  left:calc(50% - 195px);
+  top:18px;
   width:50px;
   height:50px;
-  border-radius:14px;
+  border-radius:16px;
   background:#fff;
-  box-shadow:0 8px 20px rgba(16,62,120,.10);
+  box-shadow:0 10px 24px rgba(16,62,120,.16);
   display:flex;
   align-items:center;
   justify-content:center;
   color:var(--blue);
+  z-index:999;
 }
 
 .back-btn .material-symbols-rounded{
@@ -262,5 +263,11 @@ button{
 
   .info-row p{
     font-size:15px;
+  }
+}
+
+@media(max-width:430px){
+  .back-btn{
+    left:20px;
   }
 }
