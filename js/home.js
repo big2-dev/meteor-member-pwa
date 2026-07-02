@@ -1,5 +1,5 @@
 const MEMBER_API_URL = "https://script.google.com/macros/s/AKfycbxsHYfop671-Fb4GehXwx5XhfZguvlDZqvH2xCusPevwaggSRc3omhxittN7IQHPlC2/exec";
-const EVENT_API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
+const CONTENT_API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
 const memberId = localStorage.getItem("meteor_member_id");
 const token = localStorage.getItem("meteor_token");
@@ -11,6 +11,7 @@ if (!memberId || !token) {
 document.addEventListener("DOMContentLoaded", function () {
   setGreeting();
   loadMemberInfo();
+  loadHomeNews();
   loadHomeEvent();
 });
 
@@ -39,8 +40,6 @@ function loadMemberInfo() {
     .then(result => {
       if (!result.success) {
         document.getElementById("memberName").textContent = "会員情報なし";
-        document.getElementById("todayNews").textContent =
-          result.message || "会員情報が見つかりません。";
         return;
       }
 
@@ -53,8 +52,34 @@ function loadMemberInfo() {
     .catch(error => {
       console.error(error);
       document.getElementById("memberName").textContent = "通信エラー";
-      document.getElementById("todayNews").textContent =
-        "会員情報の取得に失敗しました。";
+    });
+}
+
+function loadHomeNews() {
+  const card = document.getElementById("homeNewsCard");
+  const title = document.getElementById("homeNewsTitle");
+  const body = document.getElementById("todayNews");
+
+  if (!card || !title || !body) return;
+
+  fetch(`${CONTENT_API_URL}?action=news`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success || !data.news || data.news.length === 0) {
+        card.style.display = "none";
+        return;
+      }
+
+      const news = data.news[0];
+
+      title.textContent = news.title || "本日のお知らせ";
+      body.textContent = news.body || "";
+
+      card.style.display = "grid";
+    })
+    .catch(error => {
+      console.error(error);
+      card.style.display = "none";
     });
 }
 
@@ -64,7 +89,7 @@ function loadHomeEvent() {
 
   if (!card || !imageWrap) return;
 
-  fetch(`${EVENT_API_URL}?action=events`)
+  fetch(`${CONTENT_API_URL}?action=events`)
     .then(response => response.json())
     .then(data => {
       if (!data.success || !data.events || data.events.length === 0) {
@@ -150,9 +175,14 @@ function setExpireDisplay(value) {
     dateText.textContent = `期限切れ ${formatted}`;
     box.classList.add("expired", "danger");
 
-    const news = document.getElementById("todayNews");
-    if (news) {
-      news.textContent = "会員期限が切れています。受付で更新手続きをお願いします。";
+    const newsCard = document.getElementById("homeNewsCard");
+    const newsTitle = document.getElementById("homeNewsTitle");
+    const newsBody = document.getElementById("todayNews");
+
+    if (newsCard && newsTitle && newsBody) {
+      newsTitle.textContent = "会員期限が切れています";
+      newsBody.textContent = "受付で更新手続きをお願いします。";
+      newsCard.style.display = "grid";
     }
 
     return;

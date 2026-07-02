@@ -53,12 +53,12 @@
     </div>
   </section>
 
-  <section class="notice-card" onclick="goNews()">
+  <section id="homeNewsCard" class="notice-card" onclick="goNews()" style="display:none;">
     <span class="material-symbols-rounded notice-main-icon">campaign</span>
 
     <div>
-      <h2>本日のお知らせ</h2>
-      <p id="todayNews">本日は 22:00 まで営業しております。</p>
+      <h2 id="homeNewsTitle">本日のお知らせ</h2>
+      <p id="todayNews">お知らせを読み込み中...</p>
     </div>
 
     <span class="material-symbols-rounded arrow">chevron_right</span>
@@ -95,19 +95,6 @@
         <span>詳しく見る</span>
         <span class="material-symbols-rounded">chevron_right</span>
       </div>
-    </div>
-  </section>
-
-  <section class="tip-card">
-    <span class="material-symbols-rounded tip-main-icon">lightbulb</span>
-
-    <div>
-      <h2>本日のワンポイント</h2>
-      <p id="todayTip">7番アイアンで100ヤードを10球連続で狙ってみましょう！</p>
-    </div>
-
-    <div class="tip-illust">
-      <span class="material-symbols-rounded">golf_course</span>
     </div>
   </section>
 

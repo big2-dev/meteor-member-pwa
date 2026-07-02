@@ -585,3 +585,65 @@ button{
   .home-event-image-wrap{height:86px;}
   .home-event-body h2{font-size:17px;}
 }
+
+/* ===========================
+   ホームバナー
+=========================== */
+
+.home-banner-card{
+  margin-top:16px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.home-banner-card:active{
+  transform:scale(.98);
+}
+
+.home-banner-image-wrap{
+  width:100%;
+  height:150px;
+  background:linear-gradient(135deg,#0b63ce,#4b97ef);
+  overflow:hidden;
+}
+
+.home-banner-image-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.home-banner-body{
+  padding:16px;
+}
+
+.home-banner-label{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#eef6ff;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.home-banner-body h2{
+  font-size:20px;
+  font-weight:900;
+  color:var(--navy);
+  line-height:1.4;
+  margin-bottom:8px;
+}
+
+.home-banner-body p{
+  font-size:14px;
+  color:#475569;
+  line-height:1.6;
+}
