@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>イベント｜METEO</title>
-
-  <link rel="stylesheet" href="css/event.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>イベント | METEO</title>
+  <link rel="stylesheet" href="css/event.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
 </head>
+
 <body>
-  <main class="app">
-    <header class="page-header">
-      <button class="back-btn" onclick="goHome()">‹</button>
-      <img src="images/logo-horizontal.png" alt="METEO" class="logo" />
-      <p class="tagline">あなたのゴルフライフを、もっと楽しく。</p>
-    </header>
+<main class="app">
 
-    <section class="title-section">
-      <h1>イベント</h1>
-      <p>開催予定のイベント情報を確認できます。</p>
-    </section>
+  <header class="page-header">
+    <button class="back-btn" onclick="goHome()" aria-label="戻る">
+      <span class="material-symbols-rounded">chevron_left</span>
+    </button>
 
-    <section id="eventArea" class="event-area">
-      <div class="loading-card">イベント情報を読み込み中...</div>
-    </section>
-  </main>
+    <img src="images/logo-horizontal.png" alt="METEO" class="logo">
+    <p class="copy">あなたのゴルフライフを、もっと楽しく。</p>
+  </header>
+
+  <section class="page-title">
+    <h1>イベント</h1>
+    <p>開催予定のイベント情報を確認できます。</p>
+  </section>
+
+  <section id="eventArea" class="event-area">
+    <div class="loading-card">イベント情報を読み込み中...</div>
+  </section>
+
+  <div class="bottom-space"></div>
 
   <nav class="bottom-nav">
-    <button onclick="goHome()">⌂<span>ホーム</span></button>
-    <button onclick="goQR()">▦<span>会員証</span></button>
-    <button class="active">▣<span>イベント</span></button>
-    <button onclick="goNews()">☷<span>お知らせ</span></button>
-    <button onclick="goMore()">…<span>その他</span></button>
+    <button onclick="goHome()">
+      <span class="material-symbols-rounded">home</span>
+      <small>ホーム</small>
+    </button>
+
+    <button onclick="goQR()">
+      <span class="material-symbols-rounded">qr_code_2</span>
+      <small>会員証</small>
+    </button>
+
+    <button class="active" onclick="goEvent()">
+      <span class="material-symbols-rounded">event</span>
+      <small>イベント</small>
+    </button>
+
+    <button onclick="goNews()">
+      <span class="material-symbols-rounded">campaign</span>
+      <small>お知らせ</small>
+    </button>
+
+    <button onclick="goMore()">
+      <span class="material-symbols-rounded">more_horiz</span>
+      <small>その他</small>
+    </button>
   </nav>
 
-  <script src="js/event.js"></script>
+</main>
+
+<script src="js/event.js"></script>
 </body>
 </html>
