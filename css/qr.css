@@ -272,6 +272,7 @@ body {
 }
 
 .bottom-nav button {
+  min-height: 58px;
   border: none;
   background: transparent;
   color: #718195;
@@ -285,7 +286,7 @@ body {
 }
 
 .bottom-nav .material-symbols-rounded {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1;
   font-variation-settings:
     "FILL" 0,
@@ -295,7 +296,7 @@ body {
 }
 
 .bottom-nav small {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 900;
 }
 
