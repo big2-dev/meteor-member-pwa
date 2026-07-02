@@ -1,3 +1,7 @@
+html {
+  scrollbar-gutter: stable;
+}
+
 :root{
   --blue:#0b63ce;
   --deep:#073f9e;
@@ -20,6 +24,7 @@
 
 body{
   min-height:100vh;
+  overflow-y:scroll;
   background:linear-gradient(180deg,#ffffff 0%,#eef5fc 100%);
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Yu Gothic","Meiryo",sans-serif;
