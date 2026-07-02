@@ -149,6 +149,23 @@ button{
   font-size:17px;
 }
 
+.news-label .material-symbols-rounded{
+  font-size:17px;
+}
+
+.news-date{
+  margin-bottom:8px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.04em;
+  color:#6a7e96;
+}
+
+.news-card h2{
+  font-size:20px;
+
+
+
 .news-card h2{
   font-size:20px;
   font-weight:900;

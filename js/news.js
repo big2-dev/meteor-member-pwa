@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadNews() {
   try {
-
     newsArea.innerHTML =
       `<div class="loading-card">お知らせを読み込み中...</div>`;
 
@@ -22,7 +21,6 @@ async function loadNews() {
     renderNews(data.news || []);
 
   } catch (error) {
-
     console.error(error);
 
     newsArea.innerHTML = `
@@ -35,15 +33,12 @@ async function loadNews() {
 }
 
 function renderNews(newsList) {
-
   if (!newsList.length) {
-
     newsArea.innerHTML = `
       <div class="empty-card">
         現在お知らせはありません。
       </div>
     `;
-
     return;
   }
 
@@ -51,6 +46,7 @@ function renderNews(newsList) {
 }
 
 function createNewsCard(news) {
+  const dateText = formatNewsDate(news.createdAt || news.date || news.registeredAt || news.registrationDate);
 
   const linkButton = news.linkUrl
     ? `
@@ -74,6 +70,8 @@ function createNewsCard(news) {
           お知らせ
         </div>
 
+        ${dateText ? `<div class="news-date">${escapeHtml(dateText)}</div>` : ""}
+
         <h2>${escapeHtml(news.title)}</h2>
 
       </div>
@@ -88,6 +86,19 @@ function createNewsCard(news) {
 
     </article>
   `;
+}
+
+function formatNewsDate(value) {
+  if (!value) return "";
+
+  const date = new Date(value);
+  if (isNaN(date.getTime())) return "";
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}/${month}/${day}`;
 }
 
 function escapeHtml(value) {
