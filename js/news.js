@@ -46,7 +46,17 @@ function renderNews(newsList) {
 }
 
 function createNewsCard(news) {
-  const dateText = formatNewsDate(news.createdAt || news.date || news.registeredAt || news.registrationDate);
+  const dateText = formatNewsDate(
+  news.createdAt ||
+  news.registeredAt ||
+  news.registrationDate ||
+  news.registeredDate ||
+  news.date ||
+  news.createdDate ||
+  news.publishDate ||
+  news["登録日時"] ||
+  news["更新日時"]
+);
 
   const linkButton = news.linkUrl
     ? `

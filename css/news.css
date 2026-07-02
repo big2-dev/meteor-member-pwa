@@ -161,9 +161,6 @@ button{
   color:#6a7e96;
 }
 
-.news-card h2{
-  font-size:20px;
-
 
 
 .news-card h2{
@@ -183,6 +180,7 @@ button{
   line-height:1.8;
   color:#1f2937;
   white-space:pre-wrap;
+  word-break:break-word;
 }
 
 .news-link{
