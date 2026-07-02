@@ -1,14 +1,26 @@
 const API_BASE_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
+const EVENT_CACHE_KEY = "meteor_event_page_cache";
+
 const eventArea = document.getElementById("eventArea");
 
 document.addEventListener("DOMContentLoaded", () => {
+  renderEventCache();
   loadEvents();
 });
 
+function renderEventCache() {
+  const cache = getCache(EVENT_CACHE_KEY);
+  if (!cache) return;
+
+  renderEvents(cache);
+}
+
 async function loadEvents() {
   try {
-    eventArea.innerHTML = `<div class="loading-card">イベント情報を読み込み中...</div>`;
+    if (!getCache(EVENT_CACHE_KEY)) {
+      eventArea.innerHTML = `<div class="loading-card">イベント情報を読み込み中...</div>`;
+    }
 
     const response = await fetch(`${API_BASE_URL}?action=events`);
     const data = await response.json();
@@ -17,15 +29,22 @@ async function loadEvents() {
       throw new Error(data.message || "イベント情報を取得できませんでした");
     }
 
-    renderEvents(data.events || []);
+    const events = data.events || [];
+
+    setCache(EVENT_CACHE_KEY, events);
+    renderEvents(events);
+
   } catch (error) {
     console.error(error);
-    eventArea.innerHTML = `
-      <div class="empty-card">
-        イベント情報を読み込めませんでした。<br>
-        しばらくしてから再度お試しください。
-      </div>
-    `;
+
+    if (!getCache(EVENT_CACHE_KEY)) {
+      eventArea.innerHTML = `
+        <div class="empty-card">
+          イベント情報を読み込めませんでした。<br>
+          しばらくしてから再度お試しください。
+        </div>
+      `;
+    }
   }
 }
 
@@ -99,6 +118,25 @@ function showAllEvents() {
   alert("イベント一覧は次の工程で作成します。");
 }
 
+function setCache(key, value) {
+  localStorage.setItem(key, JSON.stringify({
+    savedAt: Date.now(),
+    value: value
+  }));
+}
+
+function getCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    const cache = JSON.parse(raw);
+    return cache.value || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 function goHome() {
   window.location.href = "home.html";
 }
@@ -115,8 +153,12 @@ function goMore() {
   window.location.href = "settings.html";
 }
 
+function goSettings() {
+  window.location.href = "settings.html";
+}
+
 function escapeHtml(value) {
-  return String(value)
+  return String(value || "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")

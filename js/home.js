@@ -1,6 +1,10 @@
 const MEMBER_API_URL = "https://script.google.com/macros/s/AKfycbxsHYfop671-Fb4GehXwx5XhfZguvlDZqvH2xCusPevwaggSRc3omhxittN7IQHPlC2/exec";
 const CONTENT_API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
+const CACHE_MEMBER = "meteor_home_member_cache";
+const CACHE_NEWS = "meteor_home_news_cache";
+const CACHE_EVENT = "meteor_home_event_cache";
+
 const memberId = localStorage.getItem("meteor_member_id");
 const token = localStorage.getItem("meteor_token");
 
@@ -10,6 +14,11 @@ if (!memberId || !token) {
 
 document.addEventListener("DOMContentLoaded", function () {
   setGreeting();
+
+  renderMemberCache();
+  renderNewsCache();
+  renderEventCache();
+
   loadMemberInfo();
   loadHomeNews();
   loadHomeEvent();
@@ -19,6 +28,8 @@ function setGreeting() {
   const hour = new Date().getHours();
   const greeting = document.getElementById("greeting");
 
+  if (!greeting) return;
+
   if (hour < 11) {
     greeting.textContent = "☀️ おはようございます！";
   } else if (hour < 18) {
@@ -26,6 +37,24 @@ function setGreeting() {
   } else {
     greeting.textContent = "🌙 こんばんは！";
   }
+}
+
+function renderMemberCache() {
+  const cache = getCache(CACHE_MEMBER);
+  if (!cache) return;
+  renderMember(cache);
+}
+
+function renderNewsCache() {
+  const cache = getCache(CACHE_NEWS);
+  if (!cache) return;
+  renderHomeNews(cache);
+}
+
+function renderEventCache() {
+  const cache = getCache(CACHE_EVENT);
+  if (!cache) return;
+  renderHomeEvent(cache);
 }
 
 function loadMemberInfo() {
@@ -43,96 +72,141 @@ function loadMemberInfo() {
         return;
       }
 
-      document.getElementById("memberName").textContent = result.name || "会員";
-      document.getElementById("memberType").textContent = result.memberType || "-";
-      document.getElementById("pointBalance").textContent = formatPoint(result.points);
-
-      setExpireDisplay(result.expireDate);
+      setCache(CACHE_MEMBER, result);
+      renderMember(result);
     })
     .catch(error => {
       console.error(error);
-      document.getElementById("memberName").textContent = "通信エラー";
+      if (!getCache(CACHE_MEMBER)) {
+        document.getElementById("memberName").textContent = "通信エラー";
+      }
     });
 }
 
+function renderMember(result) {
+  document.getElementById("memberName").textContent = result.name || "会員";
+  document.getElementById("memberType").textContent = result.memberType || "-";
+  document.getElementById("pointBalance").textContent = formatPoint(result.points);
+  setExpireDisplay(result.expireDate);
+}
+
 function loadHomeNews() {
+  fetch(`${CONTENT_API_URL}?action=news`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) throw new Error("お知らせ取得エラー");
+
+      setCache(CACHE_NEWS, data.news || []);
+      renderHomeNews(data.news || []);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function renderHomeNews(newsList) {
   const card = document.getElementById("homeNewsCard");
   const list = document.getElementById("homeNewsList");
 
   if (!card || !list) return;
 
-  fetch(`${CONTENT_API_URL}?action=news`)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.success || !data.news || data.news.length === 0) {
-        card.style.display = "none";
-        return;
-      }
+  if (!newsList.length) {
+    card.style.display = "none";
+    return;
+  }
 
-      const newsList = data.news.slice(0, 2);
+  list.innerHTML = "";
 
-      list.innerHTML = "";
+  newsList.slice(0, 2).forEach(news => {
+    const row = document.createElement("div");
+    row.className = "home-news-row";
+    row.innerHTML = `
+      <span class="home-news-title">${escapeHtml(news.title)}</span>
+    `;
+    list.appendChild(row);
+  });
 
-      newsList.forEach(news => {
-        const row = document.createElement("div");
-        row.className = "home-news-row";
-
-        row.innerHTML = `
-          <span class="home-news-title">${escapeHtml(news.title)}</span>
-        `;
-
-        list.appendChild(row);
-      });
-
-      card.style.display = "grid";
-    })
-    .catch(error => {
-      console.error(error);
-      card.style.display = "none";
-    });
+  card.style.display = "grid";
 }
 
 function loadHomeEvent() {
+  fetch(`${CONTENT_API_URL}?action=events`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) throw new Error("イベント取得エラー");
+
+      setCache(CACHE_EVENT, data.events || []);
+      renderHomeEvent(data.events || []);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+function renderHomeEvent(events) {
   const card = document.getElementById("homeEventCard");
   const imageWrap = document.getElementById("homeEventImageWrap");
 
   if (!card || !imageWrap) return;
 
-  fetch(`${CONTENT_API_URL}?action=events`)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.success || !data.events || data.events.length === 0) {
-        card.style.display = "none";
-        return;
-      }
+  if (!events.length) {
+    card.style.display = "none";
+    return;
+  }
 
-      const event = data.events[0];
+  const event = events[0];
 
-      document.getElementById("homeEventTitle").textContent =
-        event.title || "イベント";
+  document.getElementById("homeEventTitle").textContent =
+    event.title || "イベント";
 
-      document.getElementById("homeEventDate").textContent =
-        formatEventDateRange(event.start, event.end);
+  document.getElementById("homeEventDate").textContent =
+    formatEventDateRange(event.start, event.end);
 
-      document.getElementById("homeEventPlace").textContent =
-        event.place || "メテオゴルフ";
+  document.getElementById("homeEventPlace").textContent =
+    event.place || "メテオゴルフ";
 
-      if (event.image) {
-        imageWrap.innerHTML = `
-          <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title || "イベント画像")}">
-        `;
-      } else {
-        imageWrap.innerHTML = `
-          <div class="home-event-placeholder">開催予定イベント</div>
-        `;
-      }
+  if (event.image) {
+    imageWrap.innerHTML = `
+      <img src="${escapeHtml(event.image)}" alt="${escapeHtml(event.title || "イベント画像")}">
+    `;
+  } else {
+    imageWrap.innerHTML = `
+      <div class="home-event-placeholder">開催予定イベント</div>
+    `;
+  }
 
-      card.style.display = "block";
-    })
-    .catch(error => {
-      console.error(error);
-      card.style.display = "none";
-    });
+  card.style.display = "block";
+}
+
+function setExpireDisplay(value) {
+  const box = document.getElementById("expireInline");
+  const dateText = document.getElementById("expireDate");
+
+  if (!box || !dateText) return;
+
+  const formatted = formatDate(value);
+  const diffDays = getDiffDays(value);
+
+  box.classList.remove("warning", "danger", "expired");
+
+  if (diffDays === null) {
+    dateText.textContent = formatted;
+    return;
+  }
+
+  if (diffDays < 0) {
+    dateText.textContent = `期限切れ ${formatted}`;
+    box.classList.add("expired", "danger");
+    return;
+  }
+
+  dateText.textContent = formatted;
+
+  if (diffDays <= 7) {
+    box.classList.add("danger");
+  } else if (diffDays <= 30) {
+    box.classList.add("warning");
+  }
 }
 
 function formatEventDateRange(startValue, endValue) {
@@ -177,48 +251,6 @@ function formatTime(date) {
   return `${hour}:${minute}`;
 }
 
-function setExpireDisplay(value) {
-  const box = document.getElementById("expireInline");
-  const dateText = document.getElementById("expireDate");
-
-  if (!box || !dateText) return;
-
-  const formatted = formatDate(value);
-  const diffDays = getDiffDays(value);
-
-  box.classList.remove("warning", "danger", "expired");
-
-  if (diffDays === null) {
-    dateText.textContent = formatted;
-    return;
-  }
-
-  if (diffDays < 0) {
-    dateText.textContent = `期限切れ ${formatted}`;
-    box.classList.add("expired", "danger");
-
-    const newsCard = document.getElementById("homeNewsCard");
-    const newsTitle = document.getElementById("homeNewsTitle");
-    const newsBody = document.getElementById("todayNews");
-
-    if (newsCard && newsTitle && newsBody) {
-      newsTitle.textContent = "会員期限が切れています";
-      newsBody.textContent = "受付で更新手続きをお願いします。";
-      newsCard.style.display = "grid";
-    }
-
-    return;
-  }
-
-  dateText.textContent = formatted;
-
-  if (diffDays <= 7) {
-    box.classList.add("danger");
-  } else if (diffDays <= 30) {
-    box.classList.add("warning");
-  }
-}
-
 function getDiffDays(value) {
   if (!value) return null;
 
@@ -248,6 +280,25 @@ function formatDate(value) {
 function formatPoint(value) {
   const num = Number(value || 0);
   return num.toLocaleString("ja-JP");
+}
+
+function setCache(key, value) {
+  localStorage.setItem(key, JSON.stringify({
+    savedAt: Date.now(),
+    value: value
+  }));
+}
+
+function getCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    const cache = JSON.parse(raw);
+    return cache.value || null;
+  } catch (error) {
+    return null;
+  }
 }
 
 function escapeHtml(value) {

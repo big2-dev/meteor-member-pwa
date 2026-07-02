@@ -1,15 +1,27 @@
 const CONTENT_API_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
+const NEWS_CACHE_KEY = "meteor_news_page_cache";
+
 const newsArea = document.getElementById("newsArea");
 
 document.addEventListener("DOMContentLoaded", () => {
+  renderNewsCache();
   loadNews();
 });
 
+function renderNewsCache() {
+  const cache = getCache(NEWS_CACHE_KEY);
+  if (!cache) return;
+
+  renderNews(cache);
+}
+
 async function loadNews() {
   try {
-    newsArea.innerHTML =
-      `<div class="loading-card">お知らせを読み込み中...</div>`;
+    if (!getCache(NEWS_CACHE_KEY)) {
+      newsArea.innerHTML =
+        `<div class="loading-card">お知らせを読み込み中...</div>`;
+    }
 
     const response = await fetch(`${CONTENT_API_URL}?action=news`);
     const data = await response.json();
@@ -18,17 +30,22 @@ async function loadNews() {
       throw new Error(data.message || "取得できませんでした");
     }
 
-    renderNews(data.news || []);
+    const newsList = data.news || [];
+
+    setCache(NEWS_CACHE_KEY, newsList);
+    renderNews(newsList);
 
   } catch (error) {
     console.error(error);
 
-    newsArea.innerHTML = `
-      <div class="empty-card">
-        お知らせを読み込めませんでした。<br>
-        しばらくしてから再度お試しください。
-      </div>
-    `;
+    if (!getCache(NEWS_CACHE_KEY)) {
+      newsArea.innerHTML = `
+        <div class="empty-card">
+          お知らせを読み込めませんでした。<br>
+          しばらくしてから再度お試しください。
+        </div>
+      `;
+    }
   }
 }
 
@@ -47,16 +64,16 @@ function renderNews(newsList) {
 
 function createNewsCard(news) {
   const dateText = formatNewsDate(
-  news.createdAt ||
-  news.registeredAt ||
-  news.registrationDate ||
-  news.registeredDate ||
-  news.date ||
-  news.createdDate ||
-  news.publishDate ||
-  news["登録日時"] ||
-  news["更新日時"]
-);
+    news.createdAt ||
+    news.registeredAt ||
+    news.registrationDate ||
+    news.registeredDate ||
+    news.date ||
+    news.createdDate ||
+    news.publishDate ||
+    news["登録日時"] ||
+    news["更新日時"]
+  );
 
   const linkButton = news.linkUrl
     ? `
@@ -109,6 +126,25 @@ function formatNewsDate(value) {
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}/${month}/${day}`;
+}
+
+function setCache(key, value) {
+  localStorage.setItem(key, JSON.stringify({
+    savedAt: Date.now(),
+    value: value
+  }));
+}
+
+function getCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+
+    const cache = JSON.parse(raw);
+    return cache.value || null;
+  } catch (error) {
+    return null;
+  }
 }
 
 function escapeHtml(value) {
