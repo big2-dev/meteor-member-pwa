@@ -70,32 +70,7 @@ button{
   letter-spacing:.02em;
 }
 
-.bell{
-  position:absolute;
-  right:0;
-  top:8px;
-  width:42px;
-  height:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--navy);
-}
 
-.bell .material-symbols-rounded{
-  font-size:34px;
-}
-
-.bell i{
-  position:absolute;
-  right:5px;
-  top:4px;
-  width:10px;
-  height:10px;
-  background:#ff2f2f;
-  border:2px solid #fff;
-  border-radius:50%;
-}
 
 .member-block{
   margin-top:0;
