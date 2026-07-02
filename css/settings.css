@@ -57,7 +57,7 @@ button{
   align-items:center;
   justify-content:center;
   color:var(--blue);
-  z-index:999;
+  z-index:1000;
 }
 
 .back-btn .material-symbols-rounded{
