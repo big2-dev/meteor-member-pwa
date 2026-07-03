@@ -923,52 +923,21 @@ button{
 
 
 /* =====================================================
-   Home only: soft card fade-in
-   ※ bottom-nav / button / APIには触れない
+   Bottom nav only: tap feeling
+   ※ bottom-nav本体は動かさない
 ===================================================== */
 
-.home-header,
-.member-card,
-.today-point,
-.event-list,
-.news-list,
-.home-section{
-  opacity:0;
-  transform:translateY(14px);
-  animation: homeSoftIn .55s ease-out forwards;
+.bottom-nav button span,
+.bottom-nav button small,
+.bottom-nav button p{
+  transition:
+    transform .16s cubic-bezier(.22,1,.36,1),
+    opacity .16s cubic-bezier(.22,1,.36,1);
 }
 
-.home-header{
-  animation-delay:.03s;
-}
-
-.member-card{
-  animation-delay:.08s;
-}
-
-.today-point{
-  animation-delay:.14s;
-}
-
-.event-list{
-  animation-delay:.20s;
-}
-
-.news-list{
-  animation-delay:.26s;
-}
-
-.home-section{
-  animation-delay:.20s;
-}
-
-@keyframes homeSoftIn{
-  from{
-    opacity:0;
-    transform:translateY(14px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+.bottom-nav button:active span,
+.bottom-nav button:active small,
+.bottom-nav button:active p{
+  transform:translateY(1px) scale(.94);
+  opacity:.72;
 }
