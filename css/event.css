@@ -312,3 +312,21 @@ button{
     left:20px;
   }
 }
+
+.event-meta-row{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  align-items:center;
+  gap:12px;
+}
+
+.event-meta-row span:first-child{
+  color:#516174;
+  font-weight:800;
+}
+
+.event-meta-row span:last-child{
+  color:#071b35;
+  font-weight:800;
+  text-align:left;
+}
