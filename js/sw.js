@@ -1,4 +1,4 @@
-const CACHE_NAME = "meteo-pwa-v1";
+const CACHE_NAME = "meteo-pwa-v2";
 
 const urlsToCache = [
   "./",
@@ -7,18 +7,18 @@ const urlsToCache = [
   "./qr.html",
   "./event.html",
   "./news.html",
-  "./point.html",
   "./contact.html",
   "./about.html",
   "./terms.html",
   "./privacy.html",
   "./settings.html",
 
+  "./manifest.json",
+
   "./css/style.css",
   "./css/login.css",
   "./css/news.css",
   "./css/event.css",
-  "./css/point.css",
   "./css/contact.css",
   "./css/about.css",
   "./css/terms.css",
@@ -28,29 +28,25 @@ const urlsToCache = [
   "./js/home.js",
   "./js/news.js",
   "./js/event.js",
-  "./js/point.js",
   "./js/contact.js",
   "./js/about.js",
   "./js/terms.js",
   "./js/settings.js",
   "./js/qr.js",
+  "./js/qrcode.min.js",
+  "./js/install-guide.js",
 
   "./images/logo.png",
-  "./images/logo-horizontal.png"
+  "./images/logo-horizontal.png",
+  "./images/icon-192.png",
+  "./images/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
-});
-
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
@@ -64,5 +60,19 @@ self.addEventListener("activate", event => {
         })
       )
     )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      return (
+        cachedResponse ||
+        fetch(event.request).catch(() => caches.match("./index.html"))
+      );
+    })
   );
 });
