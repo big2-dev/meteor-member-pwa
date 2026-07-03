@@ -80,20 +80,26 @@ function createEventCard(event) {
       </div>
 
       <div class="event-body">
-        <p class="event-date">${escapeHtml(event.start || "")}</p>
+        
         <h2 class="event-title">${escapeHtml(event.title || "")}</h2>
         <p class="event-text">${escapeHtml(event.description || "")}</p>
 
         <div class="event-meta">
-          <div class="event-meta-row">
-            <span>場所</span>
-            <span>${escapeHtml(event.place || "メテオゴルフ")}</span>
-          </div>
-          <div class="event-meta-row">
-            <span>終了</span>
-            <span>${escapeHtml(event.end || "未定")}</span>
-          </div>
-        </div>
+      <div class="event-meta-row">
+        <span>開始</span>
+        <span>${escapeHtml(event.start || "未定")}</span>
+      </div>
+
+      <div class="event-meta-row">
+        <span>終了</span>
+        <span>${escapeHtml(event.end || "未定")}</span>
+      </div>
+
+  <div class="event-meta-row">
+    <span>場所</span>
+    <span>${escapeHtml(event.place || "メテオゴルフ")}</span>
+  </div>
+</div>
 
         ${entryHtml}
       </div>
