@@ -922,3 +922,50 @@ button{
 
 
 
+/* =====================================================
+   METEO Home Premium Texture
+   動きなし：質感だけ改善
+===================================================== */
+
+/* ホーム背景を少し上質に */
+body{
+  background:
+    radial-gradient(circle at top left, rgba(11,99,206,.08), transparent 34%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
+}
+
+/* ホーム内カードの質感 */
+.member-card,
+.today-point,
+.event-card,
+.news-card,
+.home-section{
+  border-radius:24px;
+  background:rgba(255,255,255,.94);
+  box-shadow:
+    0 18px 38px rgba(16, 35, 68, .10),
+    0 4px 12px rgba(16, 35, 68, .05);
+  border:1px solid rgba(255,255,255,.72);
+}
+
+/* カード内の文字を少し上品に */
+.member-card,
+.today-point,
+.event-card,
+.news-card,
+.home-section{
+  letter-spacing:.01em;
+}
+
+/* セクション見出しを少し締める */
+.home-section h2,
+.today-point h2{
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+/* イベント・お知らせカードの余白 */
+.event-card,
+.news-card{
+  padding:18px 18px;
+}
