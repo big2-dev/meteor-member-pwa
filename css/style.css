@@ -1064,10 +1064,7 @@ html{
   scroll-behavior:smooth;
 }
 
-.app{
-  scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch;
-}
+
 
 /* 動きを減らす設定の人には配慮 */
 @media (prefers-reduced-motion: reduce){
@@ -1079,4 +1076,21 @@ html{
     transition-duration:.01ms !important;
     scroll-behavior:auto !important;
   }
+}
+
+/* 下部ナビは必ず画面下に固定 */
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:430px;
+  z-index:999;
+}
+
+/* 本文が下部ナビに隠れないようにする */
+.bottom-space{
+  height:92px;
+  flex-shrink:0;
 }
