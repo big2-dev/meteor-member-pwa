@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>アプリについて | METEO</title>
 
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b63ce">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="METEO">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+
   <link rel="stylesheet" href="css/about.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
 </head>
@@ -37,16 +44,16 @@
     <div class="about-line"></div>
 
     <p class="about-text">
-   METEO公式会員アプリ<br><br>
+      METEO公式会員アプリ<br><br>
 
-   Version 1.1<br><br>
+      Version 1.1<br><br>
 
-   あなたのゴルフライフを、<br>
-   もっと楽しく。<br><br>
+      あなたのゴルフライフを、<br>
+      もっと楽しく。<br><br>
 
-   © 2026 Neo Golf Stage METEO<br>
-   All Rights Reserved.
-　　</p>
+      © 2026 Neo Golf Stage METEO<br>
+      All Rights Reserved.
+    </p>
   </section>
 
   <section class="about-info">
@@ -103,5 +110,14 @@
 </main>
 
 <script src="js/about.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js");
+  });
+}
+</script>
+
 </body>
 </html>
