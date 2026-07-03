@@ -816,3 +816,39 @@ button{
     opacity:1;
   }
 }
+
+.app-loading{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+  transition:opacity .35s ease, visibility .35s ease;
+}
+
+.app-loading.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.app-loading-inner{
+  text-align:center;
+  transform:translateY(-10px);
+}
+
+.app-loading-inner img{
+  width:168px;
+  height:auto;
+  display:block;
+  margin:0 auto 18px;
+}
+
+.app-loading-inner p{
+  margin:0;
+  font-size:13px;
+  font-weight:700;
+  color:#8a96a8;
+  letter-spacing:.08em;
+}
