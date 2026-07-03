@@ -58,12 +58,9 @@ function renderEvents(events) {
     return;
   }
 
-  const mainEvent = events[0];
-
-  eventArea.innerHTML = `
-    ${createEventCard(mainEvent)}
-    ${events.length > 1 ? createMoreButton(events.length) : ""}
-  `;
+  eventArea.innerHTML = events
+    .map(event => createEventCard(event))
+    .join("");
 }
 
 function createEventCard(event) {
