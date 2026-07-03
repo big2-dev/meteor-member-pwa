@@ -919,3 +919,56 @@ button{
   }
 }
 
+
+
+
+/* =====================================================
+   Home only: soft card fade-in
+   ※ bottom-nav / button / APIには触れない
+===================================================== */
+
+.home-header,
+.member-card,
+.today-point,
+.event-list,
+.news-list,
+.home-section{
+  opacity:0;
+  transform:translateY(14px);
+  animation: homeSoftIn .55s ease-out forwards;
+}
+
+.home-header{
+  animation-delay:.03s;
+}
+
+.member-card{
+  animation-delay:.08s;
+}
+
+.today-point{
+  animation-delay:.14s;
+}
+
+.event-list{
+  animation-delay:.20s;
+}
+
+.news-list{
+  animation-delay:.26s;
+}
+
+.home-section{
+  animation-delay:.20s;
+}
+
+@keyframes homeSoftIn{
+  from{
+    opacity:0;
+    transform:translateY(14px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
