@@ -918,3 +918,165 @@ button{
     opacity:1;
   }
 }
+
+/* =====================================================
+   METEO UX PREMIUM MOTION
+   Apple-like soft interaction
+===================================================== */
+
+:root{
+  --ease-out-ios:cubic-bezier(.22,1,.36,1);
+  --ease-spring:cubic-bezier(.18,.89,.32,1.28);
+}
+
+/* ページ全体の自然な表示 */
+body{
+  animation: pageFadeIn .55s var(--ease-out-ios) both;
+}
+
+@keyframes pageFadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ホーム内カードをふわっと表示 */
+.home-card,
+.member-card,
+.event-card,
+.news-card,
+.point-card,
+.tip-card,
+section.card,
+.card{
+  opacity:0;
+  transform:translateY(18px) scale(.985);
+  animation: cardRise .68s var(--ease-out-ios) both;
+  will-change:transform, opacity;
+}
+
+/* 時間差表示 */
+.member-card,
+.home-card:nth-of-type(1),
+.card:nth-of-type(1){
+  animation-delay:.06s;
+}
+
+.event-card,
+.home-card:nth-of-type(2),
+.card:nth-of-type(2){
+  animation-delay:.14s;
+}
+
+.news-card,
+.home-card:nth-of-type(3),
+.card:nth-of-type(3){
+  animation-delay:.22s;
+}
+
+.point-card,
+.tip-card,
+.home-card:nth-of-type(4),
+.card:nth-of-type(4){
+  animation-delay:.30s;
+}
+
+@keyframes cardRise{
+  from{
+    opacity:0;
+    transform:translateY(18px) scale(.985);
+    filter:blur(3px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:blur(0);
+  }
+}
+
+/* カードの高級感 */
+.home-card,
+.member-card,
+.event-card,
+.news-card,
+.point-card,
+.tip-card,
+section.card,
+.card{
+  box-shadow:
+    0 14px 34px rgba(20,40,80,.10),
+    0 3px 10px rgba(20,40,80,.06);
+  transition:
+    transform .28s var(--ease-out-ios),
+    box-shadow .28s var(--ease-out-ios),
+    background .28s var(--ease-out-ios);
+}
+
+/* タップできる要素の押し心地 */
+button,
+.nav-item,
+.bottom-nav button,
+.card button,
+a,
+[onclick]{
+  -webkit-tap-highlight-color:transparent;
+  transition:
+    transform .18s var(--ease-out-ios),
+    opacity .18s var(--ease-out-ios),
+    box-shadow .22s var(--ease-out-ios),
+    background .22s var(--ease-out-ios);
+  touch-action:manipulation;
+}
+
+button:active,
+.nav-item:active,
+.bottom-nav button:active,
+.card button:active,
+a:active,
+[onclick]:active{
+  transform:scale(.97);
+  opacity:.86;
+}
+
+/* 下部ナビを少しApple風に */
+.bottom-nav{
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 -10px 30px rgba(20,40,80,.08);
+}
+
+/* 下部ナビアイコンの心地よい反応 */
+.bottom-nav button{
+  border-radius:16px;
+}
+
+.bottom-nav button:active{
+  transform:scale(.94);
+}
+
+/* スクロールをなめらかに */
+html{
+  scroll-behavior:smooth;
+}
+
+.app{
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* 動きを減らす設定の人には配慮 */
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
