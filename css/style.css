@@ -938,6 +938,6 @@ button{
 .bottom-nav button:active span,
 .bottom-nav button:active small,
 .bottom-nav button:active p{
-  transform:translateY(1px) scale(.94);
-  opacity:.72;
+  transform:translateY(2px) scale(.88);
+  opacity:.55;
 }
