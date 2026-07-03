@@ -922,22 +922,3 @@ button{
 
 
 
-/* =====================================================
-   Bottom nav only: tap feeling
-   ※ bottom-nav本体は動かさない
-===================================================== */
-
-.bottom-nav button span,
-.bottom-nav button small,
-.bottom-nav button p{
-  transition:
-    transform .16s cubic-bezier(.22,1,.36,1),
-    opacity .16s cubic-bezier(.22,1,.36,1);
-}
-
-.bottom-nav button:active span,
-.bottom-nav button:active small,
-.bottom-nav button:active p{
-  transform:translateY(2px) scale(.88);
-  opacity:.55;
-}
