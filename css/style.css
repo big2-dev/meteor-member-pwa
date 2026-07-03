@@ -928,11 +928,20 @@ button{
 ===================================================== */
 
 /* ホーム背景を少し上質に */
+
 body{
-  background:
-    radial-gradient(circle at top left, rgba(11,99,206,.08), transparent 34%),
-    linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
+  background:#f8f9fb;
 }
+
+body{
+  background:#f8f9fb;
+}
+
+.app{
+  background:#f8f9fb;
+}
+
+
 
 /* ホーム内カードの質感 */
 .member-card,
