@@ -852,3 +852,69 @@ button{
   color:#8a96a8;
   letter-spacing:.08em;
 }
+
+.update-notice{
+  position:fixed;
+  inset:0;
+  background:rgba(10,20,40,.42);
+  backdrop-filter:blur(14px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10001;
+  padding:20px;
+}
+
+.update-notice-card{
+  width:100%;
+  max-width:360px;
+  background:#fff;
+  border-radius:28px;
+  padding:30px 24px 24px;
+  text-align:center;
+  box-shadow:0 24px 70px rgba(12,35,70,.28);
+  animation:updatePop .25s ease-out;
+}
+
+.update-notice-card img{
+  width:72px;
+  height:72px;
+  border-radius:18px;
+  margin-bottom:18px;
+  box-shadow:0 10px 24px rgba(15,40,90,.18);
+}
+
+.update-notice-card h2{
+  margin:0 0 10px;
+  font-size:20px;
+  color:#0f1f3d;
+}
+
+.update-notice-card p{
+  margin:0 0 22px;
+  font-size:14px;
+  line-height:1.8;
+  color:#64748b;
+}
+
+.update-notice-card button{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  background:#0b63ce;
+  color:#fff;
+  font-weight:800;
+  font-size:15px;
+  padding:15px;
+}
+
+@keyframes updatePop{
+  from{
+    transform:scale(.96);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
