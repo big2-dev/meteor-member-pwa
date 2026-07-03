@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadMemberInfo();
   loadHomeNews();
   loadHomeEvent();
+  checkForUpdates();
 });
 
 function setGreeting() {
@@ -311,6 +312,15 @@ function escapeHtml(value) {
 }
 
 function goHome() {
+
+  if (location.pathname.endsWith("home.html") ||
+      location.pathname === "/" ||
+      location.pathname.endsWith("/")) {
+
+    refreshAllAppData();
+    return;
+  }
+
   window.location.href = "home.html";
 }
 
@@ -336,4 +346,45 @@ function logout() {
   localStorage.removeItem("meteor_member_cache");
   localStorage.removeItem("meteor_point_cache");
   window.location.href = "index.html";
+}
+
+const UPDATE_STATUS_KEY = "meteor_last_update";
+
+async function checkForUpdates() {
+  try {
+    const response = await fetch(`${API_BASE_URL}?action=updateStatus`);
+    const data = await response.json();
+
+    if (!data.success) return;
+
+    const latest = Number(data.lastUpdated || 0);
+    const saved = Number(localStorage.getItem(UPDATE_STATUS_KEY) || 0);
+
+    if (saved && latest > saved) {
+      showUpdateBadge();
+    }
+
+    localStorage.setItem(UPDATE_STATUS_KEY, latest);
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function showUpdateBadge() {
+  const badge = document.getElementById("updateBadge");
+  if (badge) {
+    badge.style.display = "block";
+  }
+}
+
+function refreshAllAppData() {
+
+  localStorage.removeItem("meteor_home_cache");
+  localStorage.removeItem("meteor_event_page_cache");
+  localStorage.removeItem("meteor_event_page_cache_v2");
+  localStorage.removeItem("meteor_news_page_cache");
+
+  window.location.reload();
+
 }
