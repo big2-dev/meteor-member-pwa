@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://script.google.com/macros/s/AKfycbyab1CGFlddCTXm02GnH-na5HCXbhJ1XjGNZ2i23cWvTOaxOWH2qxyeL94U2FrnatCsbg/exec";
 
-const EVENT_CACHE_KEY = "meteor_event_page_cache";
+const EVENT_CACHE_KEY = "meteor_event_page_cache_v2";
 
 const eventArea = document.getElementById("eventArea");
 
