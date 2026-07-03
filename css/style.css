@@ -1020,7 +1020,6 @@ section.card,
 /* タップできる要素の押し心地 */
 button,
 .nav-item,
-.bottom-nav button,
 .card button,
 a,
 [onclick]{
@@ -1093,4 +1092,20 @@ html{
 .bottom-space{
   height:92px;
   flex-shrink:0;
+}
+
+/* 下部ナビ固定を最優先 */
+.bottom-nav{
+  position:fixed !important;
+  left:50% !important;
+  bottom:0 !important;
+  transform:translateX(-50%) !important;
+  width:100% !important;
+  max-width:430px !important;
+  z-index:9999 !important;
+}
+
+/* 下部ナビのボタンは押しても親の固定を邪魔しない */
+.bottom-nav button:active{
+  transform:scale(.94);
 }
