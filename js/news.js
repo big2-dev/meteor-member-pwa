@@ -23,7 +23,13 @@ async function loadNews() {
         `<div class="loading-card">お知らせを読み込み中...</div>`;
     }
 
-    const response = await fetch(`${CONTENT_API_URL}?action=news`);
+    const url = `${CONTENT_API_URL}?action=news&t=${Date.now()}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      cache: "no-store"
+    });
+
     const data = await response.json();
 
     if (!data.success) {

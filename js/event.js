@@ -22,7 +22,13 @@ async function loadEvents() {
       eventArea.innerHTML = `<div class="loading-card">イベント情報を読み込み中...</div>`;
     }
 
-    const response = await fetch(`${API_BASE_URL}?action=events`);
+    const url = `${API_BASE_URL}?action=events&t=${Date.now()}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      cache: "no-store"
+    });
+
     const data = await response.json();
 
     if (!data.success) {
@@ -85,21 +91,21 @@ function createEventCard(event) {
         <p class="event-text">${escapeHtml(event.description || "")}</p>
 
         <div class="event-meta">
-      <div class="event-meta-row">
-        <span>開始</span>
-        <span>${escapeHtml(event.start || "未定")}</span>
-      </div>
+          <div class="event-meta-row">
+            <span>開始</span>
+            <span>${escapeHtml(event.start || "未定")}</span>
+          </div>
 
-      <div class="event-meta-row">
-        <span>終了</span>
-        <span>${escapeHtml(event.end || "未定")}</span>
-      </div>
+          <div class="event-meta-row">
+            <span>終了</span>
+            <span>${escapeHtml(event.end || "未定")}</span>
+          </div>
 
-  <div class="event-meta-row">
-    <span>場所</span>
-    <span>${escapeHtml(event.place || "メテオゴルフ")}</span>
-  </div>
-</div>
+          <div class="event-meta-row">
+            <span>場所</span>
+            <span>${escapeHtml(event.place || "メテオゴルフ")}</span>
+          </div>
+        </div>
 
         ${entryHtml}
       </div>
