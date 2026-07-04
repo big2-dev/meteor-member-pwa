@@ -10,10 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  clearMemberInfo();
   createQRCode(memberId);
-  loadCachedMemberInfo();
   loadMemberInfo();
 });
+
+function clearMemberInfo() {
+  document.getElementById("memberNo").textContent = memberId || "確認中";
+  document.getElementById("memberName").textContent = "確認中";
+  document.getElementById("memberType").textContent = "確認中";
+
+  const expiryElement = document.getElementById("expiryDate");
+  if (expiryElement) {
+    expiryElement.textContent = "確認中";
+    expiryElement.classList.remove(
+      "expiry-safe",
+      "expiry-warning",
+      "expiry-danger",
+      "expiry-expired"
+    );
+  }
+}
 
 function createQRCode(value) {
   const qrArea = document.getElementById("qrImage");
@@ -29,38 +46,27 @@ function createQRCode(value) {
   });
 }
 
-function loadCachedMemberInfo() {
-  const cache = localStorage.getItem("meteor_member_cache");
-
-  if (!cache) {
-    document.getElementById("memberNo").textContent = memberId;
-    return;
-  }
-
-  try {
-    const member = JSON.parse(cache);
-
-    document.getElementById("memberNo").textContent = member.memberNo || memberId;
-    document.getElementById("memberName").textContent = member.memberName || "会員様";
-    document.getElementById("memberType").textContent = member.memberType || "会員";
-
-    setExpireDisplay(member.expireDate);
-  } catch (e) {
-    document.getElementById("memberNo").textContent = memberId;
-  }
-}
-
 function loadMemberInfo() {
-  fetch(API_URL, {
+  const url = `${API_URL}?t=${Date.now()}`;
+
+  fetch(url, {
     method: "POST",
+    cache: "no-store",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
     body: JSON.stringify({
       action: "getMemberInfo",
-      memberId: memberId
+      memberId: memberId,
+      token: token
     })
   })
     .then(response => response.json())
     .then(result => {
-      if (!result.success) return;
+      if (!result.success) {
+        clearMemberInfo();
+        return;
+      }
 
       const member = result.member || {};
 
@@ -71,16 +77,19 @@ function loadMemberInfo() {
         expireDate: result.expireDate || member.expireDate || member.有効期限 || ""
       };
 
-      localStorage.setItem("meteor_member_cache", JSON.stringify(cacheData));
-
       document.getElementById("memberNo").textContent = cacheData.memberNo;
       document.getElementById("memberName").textContent = cacheData.memberName;
       document.getElementById("memberType").textContent = cacheData.memberType;
 
       setExpireDisplay(cacheData.expireDate);
+
+      localStorage.setItem(
+        `meteor_member_cache_${memberId}`,
+        JSON.stringify(cacheData)
+      );
     })
     .catch(() => {
-      loadCachedMemberInfo();
+      clearMemberInfo();
     });
 }
 
