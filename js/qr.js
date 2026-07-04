@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  clearMemberInfo();
+  loadCachedMemberInfo();
   createQRCode(memberId);
   loadMemberInfo();
 });
@@ -92,6 +92,29 @@ function loadMemberInfo() {
       clearMemberInfo();
     });
 }
+
+function loadCachedMemberInfo() {
+  const cache = localStorage.getItem(`meteor_member_cache_${memberId}`);
+
+  if (!cache) {
+    clearMemberInfo();
+    return;
+  }
+
+  try {
+    const member = JSON.parse(cache);
+
+    document.getElementById("memberNo").textContent = member.memberNo || memberId;
+    document.getElementById("memberName").textContent = member.memberName || "会員様";
+    document.getElementById("memberType").textContent = member.memberType || "会員";
+
+    setExpireDisplay(member.expireDate);
+  } catch (e) {
+    clearMemberInfo();
+  }
+}
+
+
 
 function setExpireDisplay(value) {
   const expiryElement = document.getElementById("expiryDate");
