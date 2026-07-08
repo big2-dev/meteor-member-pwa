@@ -182,6 +182,7 @@ function renderHomeEvent(events) {
 function setExpireDisplay(value) {
   const box = document.getElementById("expireInline");
   const dateText = document.getElementById("expireDate");
+  const alertBox = document.getElementById("expireAlert");
 
   if (!box || !dateText) return;
 
@@ -190,24 +191,27 @@ function setExpireDisplay(value) {
 
   box.classList.remove("warning", "danger", "expired");
 
+  if (alertBox) {
+    alertBox.style.display = "none";
+  }
+
   if (diffDays === null) {
     dateText.textContent = formatted;
     return;
   }
 
   if (diffDays < 0) {
-    dateText.textContent = `期限切れ ${formatted}`;
+    dateText.textContent = formatted;
     box.classList.add("expired", "danger");
+
+    if (alertBox) {
+      alertBox.style.display = "flex";
+    }
+
     return;
   }
 
   dateText.textContent = formatted;
-
-  if (diffDays <= 7) {
-    box.classList.add("danger");
-  } else if (diffDays <= 30) {
-    box.classList.add("warning");
-  }
 }
 
 function formatEventDateRange(startValue, endValue) {
