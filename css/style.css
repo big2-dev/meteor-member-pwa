@@ -1088,9 +1088,12 @@ button{
 
 .point-card.premium-point{
   background:
-    radial-gradient(circle at 85% 39%, rgba(255,255,255,.20) 0 46px, transparent 47px),
-    linear-gradient(135deg,#8a5a00 0%,#d89a1d 100%);
-  box-shadow:0 20px 38px rgba(160,105,20,.24);
+    radial-gradient(circle at 82% 34%, rgba(255,255,255,.30) 0 34px, transparent 35px),
+    radial-gradient(circle at 92% 78%, rgba(255,255,255,.14) 0 64px, transparent 65px),
+    linear-gradient(135deg,#6f4300 0%,#b87908 42%,#f0bd4f 100%);
+  box-shadow:
+    0 22px 42px rgba(156,100,18,.30),
+    inset 0 1px 0 rgba(255,255,255,.32);
 }
 
 .point-card.residual-point{
