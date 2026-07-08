@@ -115,8 +115,7 @@ function renderPointCard(memberType, points) {
 
     title.textContent = "現在ポイント";
 
-    card.classList.add("premium-point");
-
+    
     card.style.display = "block";
 
     return;
