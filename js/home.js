@@ -87,8 +87,43 @@ function loadMemberInfo() {
 function renderMember(result) {
   document.getElementById("memberName").textContent = result.name || "会員";
   document.getElementById("memberType").textContent = result.memberType || "-";
-  document.getElementById("pointBalance").textContent = formatPoint(result.points);
+
+  renderPointCard(result.memberType, result.points);
   setExpireDisplay(result.expireDate);
+}
+
+function renderPointCard(memberType, points) {
+  const card = document.getElementById("pointCard");
+  const title = document.getElementById("pointTitle");
+  const balance = document.getElementById("pointBalance");
+  const note = document.getElementById("pointNote");
+
+  if (!card || !title || !balance || !note) return;
+
+  const typeText = String(memberType || "");
+  const pointValue = Number(points || 0);
+  const isYearMember = typeText.includes("1年");
+
+  card.classList.remove("residual-point");
+  note.style.display = "none";
+
+  balance.textContent = formatPoint(pointValue);
+
+  if (isYearMember) {
+    title.textContent = "現在ポイント";
+    card.style.display = "block";
+    return;
+  }
+
+  if (pointValue > 0) {
+    title.textContent = "残ポイント";
+    note.style.display = "block";
+    card.classList.add("residual-point");
+    card.style.display = "block";
+    return;
+  }
+
+  card.style.display = "none";
 }
 
 function loadHomeNews() {
@@ -316,11 +351,11 @@ function escapeHtml(value) {
 }
 
 function goHome() {
-
-  if (location.pathname.endsWith("home.html") ||
-      location.pathname === "/" ||
-      location.pathname.endsWith("/")) {
-
+  if (
+    location.pathname.endsWith("home.html") ||
+    location.pathname === "/" ||
+    location.pathname.endsWith("/")
+  ) {
     refreshAllAppData();
     return;
   }
@@ -356,7 +391,7 @@ const UPDATE_STATUS_KEY = "meteor_last_update";
 
 async function checkForUpdates() {
   try {
-    const response = await fetch(`${API_BASE_URL}?action=updateStatus`);
+    const response = await fetch(`${CONTENT_API_URL}?action=updateStatus`);
     const data = await response.json();
 
     if (!data.success) return;
@@ -383,12 +418,13 @@ function showUpdateBadge() {
 }
 
 function refreshAllAppData() {
-
+  localStorage.removeItem(CACHE_MEMBER);
+  localStorage.removeItem(CACHE_NEWS);
+  localStorage.removeItem(CACHE_EVENT);
   localStorage.removeItem("meteor_home_cache");
   localStorage.removeItem("meteor_event_page_cache");
   localStorage.removeItem("meteor_event_page_cache_v2");
   localStorage.removeItem("meteor_news_page_cache");
 
   window.location.reload();
-
 }

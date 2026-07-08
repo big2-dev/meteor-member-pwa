@@ -71,14 +71,19 @@
     </div>
   </div>
 
-  <section class="point-card point-card-static">
+  <section id="pointCard" class="point-card point-card-static" style="display:none;">
     <div class="point-mark">P</div>
-    <p class="point-title">現在ポイント</p>
+    <p id="pointTitle" class="point-title">現在ポイント</p>
 
     <div class="point-main">
       <span id="pointBalance">0</span>
       <small>pt</small>
     </div>
+
+    <p id="pointNote" class="point-note" style="display:none;">
+      新たなポイントは付与されません。<br>
+      残ポイントのみご利用いただけます。
+    </p>
   </section>
 
   <section id="homeNewsCard" class="notice-card home-news-list-card" onclick="goNews()" style="display:none;">
