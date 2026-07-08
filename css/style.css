@@ -25,7 +25,7 @@ html {
 body{
   min-height:100vh;
   overflow-y:scroll;
-  background:linear-gradient(180deg,#ffffff 0%,#eef5fc 100%);
+  background:#f8f9fb;
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Yu Gothic","Meiryo",sans-serif;
 }
@@ -43,8 +43,8 @@ button{
   max-width:430px;
   min-height:100vh;
   margin:0 auto;
-  padding: 20px 16px 92px;
-  background:linear-gradient(180deg,#ffffff 0%,#f5f9fd 100%);
+  padding:20px 16px 92px;
+  background:#f8f9fb;
   position:relative;
 }
 
@@ -69,8 +69,6 @@ button{
   font-weight:800;
   letter-spacing:.02em;
 }
-
-
 
 .member-block{
   margin-top:0;
@@ -160,25 +158,82 @@ button{
   color:#e11d48;
 }
 
-.expire-inline.danger strong{
-  color:#e11d48;
-}
-
-/* ←ここへ追加 */
-
 /* ==========================
    有効期限切れアラート
 ========================== */
 
 .expire-alert{
+  display:none;
+  align-items:flex-start;
+  gap:16px;
   margin:0 0 18px;
-  padding:18px;
+  padding:18px 20px;
+  border-radius:20px;
+  background:
+    linear-gradient(180deg,#fff 0%,#fff7f7 100%);
+  border:1px solid rgba(255,59,48,.38);
+  box-shadow:
+    0 16px 34px rgba(180,30,30,.10),
+    0 4px 12px rgba(180,30,30,.05);
+}
 
-  background:linear-gradient(180deg,#fff5f5 0%,#fffafa 100%);
-  border:2px solid #ef4444;
-  border-radius:18px;
+.expire-alert.show{
+  display:flex;
+}
 
-  box-shadow:0 14px 30px rgba(239,68,68,.12);
+.expire-icon,
+.expire-alert-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#ff3b30;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-size:24px;
+  font-weight:900;
+  line-height:1;
+  box-shadow:0 8px 18px rgba(255,59,48,.22);
+}
+
+.expire-content{
+  flex:1;
+  min-width:0;
+}
+
+.expire-title{
+  color:#d70015;
+  font-size:21px;
+  font-weight:900;
+  line-height:1.35;
+  margin-bottom:8px;
+}
+
+.expire-message{
+  color:#26374b;
+  font-size:15px;
+  line-height:1.75;
+  font-weight:700;
+  margin-bottom:14px;
+}
+
+.expire-present{
+  padding-top:14px;
+  border-top:1px dashed rgba(255,59,48,.30);
+  color:#26374b;
+  font-size:15px;
+  line-height:1.75;
+  font-weight:800;
+}
+
+.expire-present strong{
+  display:block;
+  margin-bottom:6px;
+  color:#d70015;
+  font-size:16px;
+  font-weight:900;
 }
 
 .expire-alert-top{
@@ -187,62 +242,51 @@ button{
   gap:14px;
 }
 
-.expire-alert-icon{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:#dc2626;
-  color:#fff;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:28px;
-  font-weight:900;
-}
-
 .expire-alert-top strong{
   display:block;
-  color:#dc2626;
-  font-size:20px;
+  color:#d70015;
+  font-size:21px;
   font-weight:900;
+  line-height:1.35;
 }
 
 .expire-alert-top p{
-  margin-top:4px;
+  margin-top:6px;
   font-size:15px;
+  line-height:1.7;
   font-weight:700;
-  color:#222;
+  color:#26374b;
 }
 
 .expire-alert-benefit{
-  margin-top:16px;
-  padding-top:16px;
-  border-top:1px dashed #ef4444;
-
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px dashed rgba(255,59,48,.30);
   display:flex;
-  gap:14px;
+  gap:10px;
   align-items:flex-start;
 }
 
 .benefit-icon{
-  font-size:34px;
+  font-size:26px;
+  line-height:1;
 }
 
 .expire-alert-benefit strong{
-  color:#dc2626;
-  font-size:17px;
+  display:block;
+  color:#d70015;
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:4px;
 }
 
 .expire-alert-benefit p{
   margin:0;
-  font-size:16px;
-  line-height:1.6;
+  font-size:15px;
+  line-height:1.7;
   font-weight:800;
-  color:#222;
+  color:#26374b;
 }
-
 
 .point-card{
   margin-top:16px;
@@ -641,7 +685,7 @@ button{
 }
 
 @media(max-width:380px){
-  .app{padding:14px 16px 0;}
+  .app{padding:14px 16px 92px;}
   .logo{width:270px;}
   .copy{font-size:14px;}
   .member-block{min-height:128px;}
@@ -651,6 +695,10 @@ button{
   .expire-inline{height:42px;padding:0 12px;gap:7px;}
   .expire-inline span{font-size:12px;}
   .expire-inline strong{font-size:14px;}
+  .expire-alert{padding:16px;gap:12px;}
+  .expire-title{font-size:19px;}
+  .expire-message,
+  .expire-present{font-size:14px;}
   .point-main span{font-size:52px;}
   .tip-card{grid-template-columns:44px 1fr;}
   .tip-illust{display:none;}
@@ -671,11 +719,6 @@ button{
   background:#fff;
   box-shadow:var(--shadow);
   cursor:pointer;
-  transition:.2s;
-}
-
-.home-banner-card:active{
-  transform:scale(.98);
 }
 
 .home-banner-image-wrap{
@@ -728,6 +771,8 @@ button{
 
 .home-news-list-card{
   background:linear-gradient(135deg,#eff8ff 0%,#f8fbff 100%);
+  grid-template-columns:42px 1fr 26px;
+  align-items:center;
 }
 
 .home-news-list{
@@ -736,12 +781,17 @@ button{
   gap:2px;
 }
 
+.home-news-list-card h2{
+  text-align:left;
+  margin-bottom:8px;
+}
+
 .home-news-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  padding:9px 0;
+  padding:8px 0;
   border-bottom:1px solid rgba(11,99,206,.10);
 }
 
@@ -764,24 +814,6 @@ button{
   font-size:22px;
   color:var(--blue);
   opacity:.75;
-}
-
-/* ===========================
-   ホーム画面 最終調整
-=========================== */
-
-.home-news-list-card{
-  grid-template-columns:42px 1fr 26px;
-  align-items:center;
-}
-
-.home-news-list-card h2{
-  text-align:left;
-  margin-bottom:8px;
-}
-
-.home-news-row{
-  padding:8px 0;
 }
 
 .home-event-placeholder{
@@ -1003,31 +1035,11 @@ button{
   }
 }
 
-
-
-
 /* =====================================================
    METEO Home Premium Texture
    動きなし：質感だけ改善
 ===================================================== */
 
-/* ホーム背景を少し上質に */
-
-body{
-  background:#f8f9fb;
-}
-
-body{
-  background:#f8f9fb;
-}
-
-.app{
-  background:#f8f9fb;
-}
-
-
-
-/* ホーム内カードの質感 */
 .member-card,
 .today-point,
 .event-card,
@@ -1041,7 +1053,6 @@ body{
   border:1px solid rgba(255,255,255,.72);
 }
 
-/* カード内の文字を少し上品に */
 .member-card,
 .today-point,
 .event-card,
@@ -1050,14 +1061,12 @@ body{
   letter-spacing:.01em;
 }
 
-/* セクション見出しを少し締める */
 .home-section h2,
 .today-point h2{
   font-weight:800;
   letter-spacing:.02em;
 }
 
-/* イベント・お知らせカードの余白 */
 .event-card,
 .news-card{
   padding:18px 18px;
