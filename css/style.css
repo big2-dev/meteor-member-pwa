@@ -1086,11 +1086,18 @@ button{
   object-fit:cover;
 }
 
-.point-card.residual-point{
+.point-card.premium-point{
   background:
     radial-gradient(circle at 85% 39%, rgba(255,255,255,.20) 0 46px, transparent 47px),
     linear-gradient(135deg,#8a5a00 0%,#d89a1d 100%);
   box-shadow:0 20px 38px rgba(160,105,20,.24);
+}
+
+.point-card.residual-point{
+  background:
+    radial-gradient(circle at 85% 39%, rgba(255,255,255,.17) 0 46px, transparent 47px),
+    linear-gradient(135deg,#00429d 0%,#0b67d6 100%);
+  box-shadow:0 20px 38px rgba(0,72,168,.30);
 }
 
 .point-note{

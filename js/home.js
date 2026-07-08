@@ -104,24 +104,36 @@ function renderPointCard(memberType, points) {
   const pointValue = Number(points || 0);
   const isYearMember = typeText.includes("1年");
 
+  card.classList.remove("premium-point");
   card.classList.remove("residual-point");
+
   note.style.display = "none";
 
   balance.textContent = formatPoint(pointValue);
 
   if (isYearMember) {
+
     title.textContent = "現在ポイント";
+
+    card.classList.add("premium-point");
+
     card.style.display = "block";
+
     return;
-  }
+}
 
   if (pointValue > 0) {
+
     title.textContent = "残ポイント";
+
     note.style.display = "block";
+
     card.classList.add("residual-point");
+
     card.style.display = "block";
+
     return;
-  }
+}
 
   card.style.display = "none";
 }
