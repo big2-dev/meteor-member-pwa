@@ -34,16 +34,37 @@ function clearMemberInfo() {
 
 function createQRCode(value) {
   const qrArea = document.getElementById("qrImage");
+
+  if (!qrArea) {
+    console.error("QRコード表示領域が見つかりません。");
+    return;
+  }
+
+  const qrValue = String(value || "").trim();
+
   qrArea.innerHTML = "";
 
-  new QRCode(qrArea, {
-    text: value,
-    width: 223,
-    height: 223,
-    colorDark: "#000000",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.H
-  });
+  if (!qrValue) {
+    qrArea.textContent = "QRコードを表示できません";
+    return;
+  }
+
+  const qrImage = document.createElement("img");
+
+  qrImage.src =
+    `https://quickchart.io/qr?text=${encodeURIComponent(qrValue)}`;
+
+  qrImage.alt = "会員証QRコード";
+  qrImage.width = 250;
+  qrImage.height = 250;
+  qrImage.style.display = "block";
+  qrImage.style.margin = "0 auto";
+
+  qrImage.onerror = () => {
+    qrArea.textContent = "QRコードを読み込めませんでした";
+  };
+
+  qrArea.appendChild(qrImage);
 }
 
 function loadMemberInfo() {
